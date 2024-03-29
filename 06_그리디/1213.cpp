@@ -1,27 +1,52 @@
 #include <iostream>
+#include <string>
 #include <vector>
+#include <algorithm> // reverse 함수를 사용하기 위한 헤더
 
 using namespace std;
 
 int main() {
-    int n;
-    cin >> n;
+    
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+    
+    string line;
+    cin >> line;
 
-    vector<long long> planet(n);
-    for (int i = 0; i < n; i++) {
-        cin >> planet[i];
+    vector<int> alpha(26, 0);
+    for (int i = 0; i < line.length(); i++) {
+        int idx = line[i] - 'A';
+        alpha[idx]++;
     }
 
-    long long velocity = planet[n - 1];
-    for (int i = n - 2; i >= 0; i--) {
-        if (velocity < planet[i]) {
-            velocity = planet[i];
-        } else if (planet[i] < velocity && velocity % planet[i] != 0) {
-            velocity = ((velocity / planet[i]) + 1) * planet[i];
+    int isOne = 0;
+    for (int i = 0; i < alpha.size(); i++) {
+        if (alpha[i] % 2 != 0) isOne++;
+    }
+
+    string answer = "";
+    string sb = "";
+    if (isOne > 1) {
+        answer += "I'm Sorry Hansoo";
+    } else {
+        for (int i = 0; i < alpha.size(); i++) {
+            for (int r = 0; r < alpha[i] / 2; r++) {
+                sb += (char)(i + 'A');
+            }
         }
-    }
+        answer += sb;
+        string end = sb;
+        reverse(end.begin(), end.end());
 
-    cout << velocity << endl;
+        sb = "";
+        for (int i = 0; i < alpha.size(); i++) {
+            if (alpha[i] % 2 == 1) {
+                sb += (char)(i + 'A');
+            }
+        }
+        answer += sb + end;
+    }
+    cout << answer << "\n";
 
     return 0;
 }

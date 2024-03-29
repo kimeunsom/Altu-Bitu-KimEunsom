@@ -21,7 +21,7 @@ int main() {
         }
     }
 
-    cout << velocity << endl;
+    cout << velocity << "\n";
 
     return 0;
 }
